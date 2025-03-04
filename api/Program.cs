@@ -19,6 +19,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
 using api.Repositories;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -74,16 +75,24 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
-app.MapControllers();
+//app.UseCors(options => options
+//    .WithOrigins("http://localhost:3000")
+//    .AllowAnyHeader()
+//    .AllowAnyMethod()
+//    .AllowAnyOrigin()
+//);
 
 app.UseCors(options => options
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowAnyOrigin()
-
             );
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+
 
 app.Run();
 

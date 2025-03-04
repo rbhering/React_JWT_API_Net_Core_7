@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using api.Models;
 using api.Models.Dtos;
 using api.Models.Entities;
 using api.Repositories;
@@ -62,11 +63,20 @@ namespace api.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<ActionResult<Post>> CreatePost( Post post)
+        public async Task<ActionResult<PostViewModel>> CreatePost([FromBody] PostViewModel postViewModel)
         {
+            Post post = new Post() 
+            {
+                Id = postViewModel.Id,
+                UserId = postViewModel.UserId,
+                Titulo = postViewModel.Titulo,
+                Text = postViewModel.Text
 
+            };
             return Ok(await _postRepository.CreatePost(post));
         }
+
+        
 
     }
 }
