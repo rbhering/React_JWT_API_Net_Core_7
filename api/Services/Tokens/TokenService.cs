@@ -24,7 +24,7 @@ namespace api.Services
 
             SigningCredentials signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-            tokenInstance.Expiration = DateTime.Now.AddMinutes(2);
+            tokenInstance.Expiration = DateTime.Now.AddMinutes(7);
             JwtSecurityToken securityToken = new JwtSecurityToken(
                 issuer: _configuration["Token:Issuer"],
                 audience: _configuration["Token:Audience"],

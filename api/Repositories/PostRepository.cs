@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using api.Data;
 using api.Models.Entities;
@@ -21,18 +22,28 @@ namespace api.Repositories
         {
             _context.Post.Add(post);
             await _context.SaveChangesAsync();
+            post.Text = Encoding.ASCII.GetString(post.TextByte);
             return post;
+        }
+
+        public void CreatePost1(Post post)
+        {
+            _context.Post.Add(post);
+            _context.SaveChanges();
+            post.Text = Encoding.ASCII.GetString(post.TextByte);
 
         }
 
         public async Task<IEnumerable<Post>> Get()
         {
-            return await _context.Post.ToListAsync();
+            throw new NotSupportedException();
         }
 
         public async Task<Post> GetPostById(int id)
         {
-            return await _context.Post.Where(x => x.Id == id).FirstOrDefaultAsync();
+            var post = await _context.Post.Where(x => x.Id == id).FirstOrDefaultAsync();
+            post.Text = Encoding.ASCII.GetString(post.TextByte);
+            return post;
         }
 
         public int GetPostCount()
@@ -50,15 +61,21 @@ namespace api.Repositories
 
             var skip = (page - 1) * limit;
 
-            return await _context.Post
+            var posts = await _context.Post
                 .Skip(skip)
                 .Take(limit)
                 .ToListAsync();
+            posts.ForEach(p => p.Text = Encoding.ASCII.GetString(p.TextByte));
+            return posts;
+
         }
 
         public async Task<IEnumerable<Post>> GetPostsByUser(int userId)
         {
-            return await _context.Post.Where(x => x.UserId == userId).ToListAsync();
+            var posts = await _context.Post.Where(x => x.UserId == userId).ToListAsync();
+
+            posts.ForEach(p => p.Text = Encoding.ASCII.GetString(p.TextByte));
+            return posts;
         }
     }
 }

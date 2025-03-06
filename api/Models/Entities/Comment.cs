@@ -1,4 +1,6 @@
-﻿namespace api.Models.Entities
+﻿using Microsoft.EntityFrameworkCore.Update.Internal;
+
+namespace api.Models.Entities
 {
     public class Comment
     {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using api.Models;
 using api.Models.Dtos;
@@ -26,7 +27,9 @@ namespace api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _postRepository.Get());
+            var post = await _postRepository.Get();
+            
+            return Ok();
         }
 
 
@@ -63,17 +66,23 @@ namespace api.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<ActionResult<PostViewModel>> CreatePost([FromBody] PostViewModel postViewModel)
+        public ActionResult<Post> CreatePost([FromBody] PostViewModel postViewModel)
         {
-            Post post = new Post() 
+            Post post = new Post()
             {
                 Id = postViewModel.Id,
                 UserId = postViewModel.UserId,
                 Titulo = postViewModel.Titulo,
-                Text = postViewModel.Text
-
+                Text = "",
+                TextByte = Encoding.ASCII.GetBytes(postViewModel.Text)
+                //Encoding.ASCII.GetBytes(postViewModel.Text)
+                ///reverter 
+                ///string someString = Encoding.ASCII.GetString(bytes);
             };
-            return Ok(await _postRepository.CreatePost(post));
+            _postRepository.CreatePost(post);
+
+            postViewModel.Text = Encoding.ASCII.GetString(post.TextByte);
+            return Ok();
         }
 
         

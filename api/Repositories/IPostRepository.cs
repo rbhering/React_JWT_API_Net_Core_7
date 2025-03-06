@@ -12,5 +12,7 @@ namespace api.Repositories
         Task<IEnumerable<Post>> GetPostPerPage(int page, int limit);
         Task<Post> CreatePost(Post post);
         int GetPostCount();
+
+        void CreatePost1(Post post);
     }
 }

@@ -22,7 +22,7 @@ namespace api.Repositories
 
             if (!_context.User.Any())
             {
-                var user = new User { Email = "admin@gmail.com", Password = _passwordHasher.HashPassword("123456") };
+                var user = new User { RefreshToken="fsadfds", Nome = "admin", Email = "admin@gmail.com", Password = _passwordHasher.HashPassword("123456") };
 
                 _context.Add(user);
 
