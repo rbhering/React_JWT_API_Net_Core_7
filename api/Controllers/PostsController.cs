@@ -82,7 +82,7 @@ namespace api.Controllers
             await _postRepository.CreatePost(post);
 
             postViewModel.Text = Encoding.ASCII.GetString(post.TextByte);
-            return Ok(1);
+            return Ok(post);
         }
 
         
