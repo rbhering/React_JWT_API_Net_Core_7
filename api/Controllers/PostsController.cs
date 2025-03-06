@@ -66,7 +66,7 @@ namespace api.Controllers
         }
 
         [HttpPost("create")]
-        public ActionResult<Post> CreatePost([FromBody] PostViewModel postViewModel)
+        public async Task<ActionResult> CreatePost([FromBody] PostViewModel postViewModel)
         {
             Post post = new Post()
             {
@@ -79,10 +79,10 @@ namespace api.Controllers
                 ///reverter 
                 ///string someString = Encoding.ASCII.GetString(bytes);
             };
-            _postRepository.CreatePost(post);
+            await _postRepository.CreatePost(post);
 
             postViewModel.Text = Encoding.ASCII.GetString(post.TextByte);
-            return Ok();
+            return Ok(1);
         }
 
         

@@ -20,9 +20,19 @@ namespace api.Repositories
 
         public async Task<Post> CreatePost(Post post)
         {
+            int j;
             _context.Post.Add(post);
-            await _context.SaveChangesAsync();
-            post.Text = Encoding.ASCII.GetString(post.TextByte);
+            try
+            {
+               j = await _context.SaveChangesAsync();
+            }
+            catch (Exception error)
+            {
+                var tt = error;
+                throw;
+            }
+            
+            //post.Text = Encoding.ASCII.GetString(post.TextByte);
             return post;
         }
 
