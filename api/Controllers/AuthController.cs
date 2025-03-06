@@ -52,6 +52,9 @@ namespace api.Controllers
             }
 
             Token token = _tokenService.CreateToken(user);
+            token.UserId = user.Id;
+            token.UserNome = user.Nome;
+            token.UserEmail = user.Email;
 
             user.RefreshToken = token.RefreshToken;
             user.RefreshTokenEndDate = token.Expiration.AddMinutes(2);
@@ -76,7 +79,9 @@ namespace api.Controllers
 
 
             Token token = _tokenService.CreateToken(user);
-
+            token.UserId = user.Id;
+            token.UserNome = user.Nome;
+            token.UserEmail = user.Email;
             user.RefreshToken = token.RefreshToken;
             user.RefreshTokenEndDate = token.Expiration.AddMinutes(2);
             await _userRepository.CommitAsync();

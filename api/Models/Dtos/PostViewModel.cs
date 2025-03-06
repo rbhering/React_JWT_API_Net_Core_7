@@ -11,8 +11,8 @@ namespace api.Models.Dtos
         public string Titulo { get; set; }
         public string Text { get; set; }
 
-        public byte[]? image { get; set; }
-        public byte[]? textByte { get; set; }
+        public byte[]? Image { get; set; }
+        public byte[]? TextByte { get; set; }
 
     }
 }
