@@ -13,5 +13,6 @@ namespace api.Models.Entities
         public string RefreshToken { get; set; }
         public DateTime? RefreshTokenEndDate { get; set; }
         public virtual IEnumerable<Post> Posts { get; set; }
+        public virtual IEnumerable<Comment> Comment { get; set; }
     }
 }
