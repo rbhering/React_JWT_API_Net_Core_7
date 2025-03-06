@@ -53,7 +53,7 @@ namespace api.Controllers
 
             Token token = _tokenService.CreateToken(user);
             token.UserId = user.Id;
-            token.UserNome = user.Nome;
+            token.UserName = user.Nome;
             token.UserEmail = user.Email;
 
             user.RefreshToken = token.RefreshToken;
@@ -80,7 +80,7 @@ namespace api.Controllers
 
             Token token = _tokenService.CreateToken(user);
             token.UserId = user.Id;
-            token.UserNome = user.Nome;
+            token.UserName = user.Nome;
             token.UserEmail = user.Email;
             user.RefreshToken = token.RefreshToken;
             user.RefreshTokenEndDate = token.Expiration.AddMinutes(2);

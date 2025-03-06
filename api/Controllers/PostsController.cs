@@ -66,22 +66,22 @@ namespace api.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<ActionResult> CreatePost([FromBody] PostViewModel postViewModel)
+        public async Task<ActionResult> CreatePost([FromBody] PostDTO postDTO)
         {
             Post post = new Post()
             {
-                Id = postViewModel.Id,
-                UserId = postViewModel.UserId,
-                Titulo = postViewModel.Titulo,
+                Id = postDTO.Id,
+                UserId = postDTO.UserId,
+                Titulo = postDTO.Titulo,
                 Text = "",
-                TextByte = Encoding.ASCII.GetBytes(postViewModel.Text)
+                TextByte = Encoding.ASCII.GetBytes(postDTO.Text)
                 //Encoding.ASCII.GetBytes(postViewModel.Text)
                 ///reverter 
                 ///string someString = Encoding.ASCII.GetString(bytes);
             };
             await _postRepository.CreatePost(post);
 
-            postViewModel.Text = Encoding.ASCII.GetString(post.TextByte);
+            postDTO.Text = Encoding.ASCII.GetString(post.TextByte);
             return Ok(post);
         }
 
