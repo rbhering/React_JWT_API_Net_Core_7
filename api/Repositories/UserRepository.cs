@@ -1,4 +1,5 @@
 ﻿using api.Data;
+using api.Models;
 using api.Models.Entities;
 using api.Services.Passwords;
 using Microsoft.EntityFrameworkCore;
@@ -47,6 +48,42 @@ namespace api.Repositories
         public async Task CommitAsync()
         {
             await _context.SaveChangesAsync();
+        }
+
+      
+
+        public async Task<User> GetById(int id)
+        {
+            return await _context.User.FirstAsync(x => x.Id == id);
+        }
+
+        public async Task<int> Delete(int id)
+        {
+            var user = await _context
+                    .User
+                    .FirstOrDefaultAsync(x => x.Id == id);
+
+            if(user!=null)
+                _context.User.Remove(user);
+
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<User> Create(User user)
+        {
+            await _context
+                   .User
+                   .AddAsync(user);
+            await _context.SaveChangesAsync();
+            return user;
+
+        }
+
+        public async Task<User> Update(User user)
+        {
+            _context.Entry(user).State = EntityState.Modified; 
+            await _context.SaveChangesAsync();
+            return user;
         }
     }
 }

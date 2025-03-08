@@ -51,7 +51,9 @@ namespace api.Repositories
 
         public async Task<Post> GetPostById(int id)
         {
-            var post = await _context.Post.Where(x => x.Id == id).FirstOrDefaultAsync();
+            var post = await _context.Post.Where(x => x.Id == id)
+                .Include(x => x.User)
+                .FirstOrDefaultAsync();
             post.Text = Encoding.ASCII.GetString(post.TextByte);
             return post;
         }

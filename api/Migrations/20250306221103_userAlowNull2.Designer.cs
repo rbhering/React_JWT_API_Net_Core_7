@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Data;
 
@@ -11,9 +12,11 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250306221103_userAlowNull2")]
+    partial class userAlowNull2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,6 +103,7 @@ namespace api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RefreshToken")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("RefreshTokenEndDate")
@@ -119,7 +123,7 @@ namespace api.Migrations
                         .IsRequired();
 
                     b.HasOne("api.Models.Entities.User", "User")
-                        .WithMany()
+                        .WithMany("Comment")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -132,7 +136,7 @@ namespace api.Migrations
             modelBuilder.Entity("api.Models.Entities.Post", b =>
                 {
                     b.HasOne("api.Models.Entities.User", "User")
-                        .WithMany()
+                        .WithMany("Posts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -143,6 +147,13 @@ namespace api.Migrations
             modelBuilder.Entity("api.Models.Entities.Post", b =>
                 {
                     b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("api.Models.Entities.User", b =>
+                {
+                    b.Navigation("Comment");
+
+                    b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618
         }

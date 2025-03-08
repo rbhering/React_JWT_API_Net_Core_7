@@ -1,4 +1,5 @@
-﻿using api.Models.Entities;
+﻿using System.Reflection.Metadata;
+using api.Models.Entities;
 using api.Services.Passwords;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,8 +12,11 @@ namespace api.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<User>()
+                .Property(b => b.RefreshToken)
+                .IsRequired(false);
         }
+
         public DbSet<User> User { get; set; }
         public DbSet<Post> Post { get; set; }
         public DbSet<Comment> Comment { get; set; }
